@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Fri Oct 18 21:35:12 2019
 
-@author: nithushan
-"""
+ #Import the libraries
 
 
 import pandas as pd
@@ -21,11 +18,14 @@ from keras import optimizers
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler as Scaler
 
+#Set the seed
 from numpy.random import seed
 seed(1)
 
 sns.set()
 
+
+# Load the Dataset
 data = pd.read_csv("diabetes.csv",sep=',')
 
 
@@ -37,14 +37,19 @@ X = data[['Pregnancies', 'Glucose','BloodPressure','SkinThickness','Insulin','BM
 Y = data['Outcome']
 """
 
+#Split the dataset 80 / 20
 x_train,x_test,y_train,y_test = train_test_split(X,Y,test_size = 0.2,random_state = 0,shuffle = False)
 poids= 0.0005
 
+
+# Scale the predictor variables
 scaler = Scaler()
 scaler.fit(x_train)
 x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
 
+
+# Build the model
 
 model = Sequential()
 model.add(Dense(64,input_dim = 8))
@@ -52,35 +57,35 @@ model.add(Activation('relu'))
 model.add(Dropout(0.2))
 
 
-#model.add(Dropout(0.2))
+
 model.add(Dense(32))
 model.add(Activation('relu'))
 model.add(Dropout(0.2))
-#model.add(Dense(40))
-#model.add(Activation('relu'))
-#model.add(Dropout(0.2))
-"""
-FAUT METTRE DENSE(1) A LA FIN , 8 CA NE MARCHE PAS A LA FIN
-"""
 model.add(Dense(1)) 
 
 model.add(Activation('sigmoid'))
 
+# Plot the model and save it
 plot_model(model, to_file='model.png')
 
-#adam =  optimizers.Adam(learning_rate=0.001, beta_1=0.9, beta_2=0.999, amsgrad=False)
 
-#adam = keras.optimizers.Adam( beta_1=0.9, beta_2=0.999, amsgrad=False)
-#adam = keras.optimizers.Adam(lr=0.0005, beta_1=0.9, beta_2=0.999, amsgrad=False)
+# Compile the model with Adam Optimizer
 model.compile(loss='binary_crossentropy' , optimizer='adam', metrics=['accuracy'])
 
+
+# Train the model
 history = model.fit(x_train,y_train, validation_data=(x_test, y_test),batch_size = 10, epochs=200,verbose=1)
 
+
+#Evaluate the model
 print(" Evaluate model")
 scores = model.evaluate(x_test, y_test, verbose=1)
+
+#Save the model
 model.save("diabetes.h5")
 
 
+#Plot the accuracy along the number of epoch
 plt.plot(history.history['acc'])
 plt.plot(history.history['val_acc'])
 plt.title('Model accuracy')
@@ -91,7 +96,7 @@ plt.show()
 
 
 
-
+# Calculate model accuracy
 print("%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
 
 
