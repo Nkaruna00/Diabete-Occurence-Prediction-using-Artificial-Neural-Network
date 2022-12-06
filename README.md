@@ -1,5 +1,8 @@
-# ANN-PIMAS-Diabete
-ANN PIMAS Diabete 
+#  Diabete Occurence Prediction using Artificial Neural Network 
+
+Neural Network made with Keras and Python to predict the diabete occurence in a population.
+
+
 
 ## Description
 
