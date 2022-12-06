@@ -12,17 +12,17 @@ Development of an artificial neural network to predict whether a patient is diab
 This dataset comes from the National Institute of Diabetes and Digestive and Kidney Diseases.
 
 The dataset consists of several medical predictor variables.The predictor variables include:
-* number of pregnancies the patient has had
-* glucose level
-* blood pressure
-* skin thickness
+* Number of pregnancies the patient has had
+* Glucose level
+* Blood pressure
+* Skin thickness
 * BMI
 * Insulin level
 * Diabete Pedigree function (scores likelihood of diabetes based on family history)
 * Age
 
 and a target variable:
-* the outcome (1 if the patient developed diabetes, 0 otherwise)  
+* Outcome (1 if the patient developed diabetes, 0 otherwise)  
 
 
 The prediction variables are first scaled to avoid scaling differences between values and to facilitate learning.
